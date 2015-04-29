@@ -1,0 +1,21 @@
+p4内部上线：
+	一、authsys系统步骤：   
+     	1、初始化表结构(新增), 执行sql\app_p4目下authsys.sql文件， 生成t加下划线开头，即t_xxxxxx的新表
+（新表中包含所有旧表的表结构.  t_user表中有岗位字段position_id,  旧表user中没有）
+   	    2、 拷贝旧表数据到新表, 命令行中， 切换至tools目录， 执行 python old_to_new_table.py -runmode=prod
+			a 拷贝的数据包括：user表（不包含org_id为0的数据）
+			b 菜单menu, 系统sub_system
+		3、 执行sql\app_p4目下authsys_init_data.sql文件， 包含：
+    		a 初始化 资源分组t_res_group,  
+	    	b 资源操作编码表t_res_action
+ 		    c 以及“资源”和“操作编码“关系表t_res_raction
+		    d 资源表 t_resource
+		4、统一测试环境和线上环境中的system ID值，以及对应的key、secret
+		5、董伟已处理。投递员同步数据脚本，获取用户信息时使用旧表user
+		6、手动修改系统中的URL值， 即t_subsystem中的domain值
+
+================================
+p4外部上线：
+	一、 authsys系统：
+		1. 导出sql语句（所有t_xxxx表以及表内容），直接在线上执行sql（脚本执行）
+		2. 更新代码

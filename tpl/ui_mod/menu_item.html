@@ -1,0 +1,16 @@
+   
+{% if touch_menu(menu) %}
+    {% if menu.is_leaf() %}
+    <li class="cur"><a href="{{ menu_url(menu) }}" target="navTab" rel="{{menu.target_tab}}">{{menu.name}}</a></li>
+    {% else %}
+    <li>
+        <span>{{menu.name}}</span>
+        <ul>
+        {% for i in menu.children() %}
+        {% module MenuItem(i) %}
+        {% end %}
+        </ul>
+    </li>
+    {% end %}
+{% end %}
+

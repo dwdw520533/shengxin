@@ -1,0 +1,24 @@
+
+<div class="pageContent">
+	<form method="post" action="subsystem/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+        <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+		<div class="pageFormContent" layoutH="56">			
+			<p>
+				<label>子系统名称：</label>
+				<input name="name" class="required" type="text"/>
+			</p>
+			<p>
+				<label>子系统域名：</label>
+				<input name="domain" type="text"/>
+			</p>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

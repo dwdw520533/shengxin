@@ -1,0 +1,41 @@
+
+<div class="pageContent">
+	<form method="post" action="org/save" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+        <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+		<div class="pageFormContent" layoutH="56">
+			<p>
+				<label>组织名称：</label>
+				<input name="name" class="required" type="text" value="{{org.name}}"/>
+				<input type="hidden" name="id" value="{{org.id}}"/>
+			</p>			
+			<p>
+				<label>上级：</label>
+				<select name="orgparent{{org.id}}.id" class="required" style="width:160px;margin-right:10px;">
+					<option value="0">无</option>
+                    {% for i in all_orgs %}
+                    {% if i.id != org.id %}
+					<option value="{{i.id}}" {% if org.parent_id == i.id %}selected{%end%}>{{i.full_name}}</option>
+                    {% end %}
+                    {% end %}
+				</select>
+                <input name="orgparent{{org.id}}.name" type="text" postField="org_name"
+                            suggestFields="name" suggestUrl="org/search" lookupGroup="orgparent{{org.id}}"/>
+			</p>
+
+            <label>状态：</label>
+				<select name="status" class="required" style="width:160px;margin-right:10px;">
+                    <option value="1" {% if org.status == 1 %}selected{%end%}>启用</option>
+                    <option value="2" {% if org.status == 2 %}selected{%end%}>禁用</option>
+                    </select>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+

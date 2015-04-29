@@ -1,0 +1,9 @@
+<!-- 资源对应的所有操作 -->
+<dl class="nowrap">
+    {% for i in res_ractions %}
+        <dd style="width:250px;">
+            <input name="ract_code__{{i.code}}" value="{{i.code}}" type="checkbox"
+            {% if i.code in cur_ract_codes %}checked{% end %}>{{i.name}}({{i.code}})</dd>
+    {% end %}
+
+</dl>

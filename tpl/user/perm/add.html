@@ -1,0 +1,79 @@
+
+<style>
+.pageFormContent dl.nowrap dd {width:400px;}
+</style>
+<div class="pageContent">
+	<form method="post" action="perm/save" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+        <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+		<div class="pageFormContent" layoutH="56">			
+        <fieldset style="border:0px;">
+            <dl class="nowrap">
+				<dt>权限名称：</dt>
+                <dd><input name="name" class="required" type="text"/></dd>
+			</dl>
+
+            <dl class="nowrap">
+				<dt>子系统：</dt>
+                <dd>
+				<select name="system_id" class="required combox" ref="id_resource_id" refUrl="resource/ref?system_id={value}">
+				<option value="0">不限</option>
+                {% for i in sub_systems %}
+					<option value="{{i.id}}">{{i.name}}</option>
+                {% end %}
+				</select>
+                </dd>
+			</dl>
+            <dl class="nowrap">
+				<dt>资源：</dt>
+                <dd>
+				<select name="resource_id" class="required combox" id="id_resource_id" ref="id_res_act_id" refUrl="raction/ref?res_id={value}">
+                <option value="">无</option>
+                {% for i in resources %}
+					<option value="{{i.id}}">{{i.full_name}}</option>
+                {% end %}
+				</select>
+                </dd>
+			</dl>
+
+            <fieldset style='border:0px;'>
+            <dl class="nowrap"><dt>操作列表：</dt> <dd> </dd></dl>
+             <dl class="nowrap"><dt>超级操作：</dt>
+                 <dd style="width:750px;"><input name="ract_code__all" value="all"
+                                                 type="checkbox">
+                     选中资源全部操作(All)【说明：如果此复选框被选中， 则表示拥有选中资源的全部操作权限, 不再需要勾选其它操作】</dd>
+             </dl>
+                <dl id="id_block_res_actions" class="nowrap"></dl>
+            </fieldset>
+
+
+
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+<script>
+    $("#id_resource_id").change(function(event){
+        var resource_id = $(this).val();
+		if (resource_id !== ''){
+            $.ajax({
+                type: 'POST',
+                url: "/perm/get_res_ractions",
+                data: "resource_id=" + $(this).val(),
+                dataType: "html",
+                cache: false,
+                success: function (html) {
+                    $("#id_block_res_actions").html(html)
+                }
+            });
+            event.preventDefault();
+        }
+	});
+
+</script>

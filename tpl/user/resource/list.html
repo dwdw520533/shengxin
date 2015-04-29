@@ -1,0 +1,86 @@
+
+<form id="pagerForm" method="post" action="resource/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+	<input type="hidden" name="name" value="{{name}}" />
+	<input type="hidden" name="system_id" value="{{system_id}}" />
+	<input type="hidden" name="group" value="{{group}}" />
+    <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="resource/list" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					子系统：
+                    <select name="system_id">
+                        <option value="0">不限</option>
+                        {% for i in all_systems %}
+                        <option value="{{i.id}}" {% if system_id == i.id %}selected{%end%}>{{i.name}}</option>
+                        {% end %}
+                    </select>
+				</td>
+				<td>
+					分组：<input type="text" name="group" value="{{group}}"/>
+				</td>
+				<td>
+					资源名：<input type="text" name="name" value="{{name}}"/>
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+            {% if has_perm('add','user:resource') %}
+			<li><a class="add" href="resource/add?target_tab={{target_tab}}" target="navTab" title="添加资源"><span>添加</span></a></li>
+            {% end %}
+            {% if has_perm('delete','user:resource') %}
+            <li><a class="delete" href="resource/delete?id={sid_resource}&target_tab={{target_tab}}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+            {% end %}
+            {% if has_perm('update','user:resource') %}
+            <li><a class="edit" href="resource/edit?id={sid_resource}&target_tab={{target_tab}}"
+                   target="navTab" title="编辑资源" ><span>修改</span></a></li>
+            {% end %}
+            {% if has_perm('list','user:resgroup') %}
+            <li><a class="edit" href="resgroup/list?target_tab=resgroup_list"
+                   target="navTab" title="资源分组管理" ><span>资源分组管理</span></a></li>
+            {% end %}
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th align="center">ID</th>
+				<th align="center">名称</th>
+				<th align="center">描述</th>
+				<th align="center">分组</th>
+				<th align="center">子系统</th>
+				<th align="center">更新时间</th>
+			</tr>
+		</thead>
+		<tbody>		
+           {% for r in resources%}
+            <tr target="sid_resource" rel="{{r.id}}">
+                <td>{{r.id}}</td>
+                <td>{{r.name}}</td>
+                <td>{{r.nick}}</td>
+                <td>{{r.group}}</td>
+                <td>{{r.system.name}}</td>
+                <td>{{r.update_time}}</td>
+            </tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

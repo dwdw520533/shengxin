@@ -1,0 +1,75 @@
+
+<div class="pageHeader">
+	<form id="pagerForm" onsubmit="return navTabSearch(this);" action="notice/list" method="post">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+    <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					类别：
+                    <select name="category_id">
+                        <option value="0">不限</option>
+                        {% for i in category_list %}
+                        <option value="{{i.id}}" {% if category_id == i.id %}selected{%end%}>{{i.name}}</option>
+                        {% end %}
+                    </select>
+				</td>
+				<td>
+					标题：<input type="text" name="name" value="{{name}}"/>
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			{% if has_perm('add','sys_settings :notice_mgmt') %}
+            <li><a class="add" href="notice/add?target_tab={{target_tab}}" target="navTab"><span>添加</span></a></li>
+            {% end %}
+            {% if has_perm('delete','sys_settings :notice_mgmt') %}
+            <li><a class="delete" href="notice/delete?id={sid}&target_tab={{target_tab}}" target="ajaxTodo" title="确定要删除吗?"><span>删除</span></a></li>
+            {% end %}
+
+            {% if has_perm('update','sys_settings :notice_mgmt') %}
+            <li><a class="edit" href="notice/edit?id={sid}&target_tab={{target_tab}}" target="navTab"><span>修改</span></a></li>
+			{% end %}
+            <li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th align="center">ID</th>
+				<th align="center">名称</th>
+				<th align="center">类别</th>
+				<th align="center">是否置顶</th>
+				<th align="center">是否广播</th>
+				<th align="center">创建者</th>
+				<th align="center">创建时间</th>
+			</tr>
+		</thead>
+		<tbody>		
+			   {% for i in notice_list %}
+				<tr target="sid" rel="{{i.id}}">
+					<td>{{ i.id }}</td>
+					<td>{{ i.name }}</td>
+					<td>{{ i.category.name }}</td>
+					<td>{% if i.is_top %}是{%else%}否{%end%}</td>
+					<td>{% if i.is_global %}是{%else%}否{%end%}</td>
+					<td>{{ i.create_user }}</td>
+					<td>{{ i.create_time }}</td>
+				</tr>
+				{% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

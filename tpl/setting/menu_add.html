@@ -1,0 +1,71 @@
+
+<style>
+.pageFormContent dl.nowrap dd {width:400px;}
+</style>
+<div class="pageContent">
+	<form method="post" action="menu/save" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+        <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+		<div class="pageFormContent" layoutH="56">			
+        <fieldset style="border:0px;">
+            <dl class="nowrap">
+				<dt>子系统：</dt>
+                <dd>
+				<select name="system_id" class="required combox" ref="id_menu_adding" refUrl="menu/ref?system_id={value}&flag=2">
+                    <option value="">不限</option>
+                    {% for i in all_systems %}
+					<option value="{{i.id}}">{{i.name}}</option>
+                    {% end %}
+				</select>
+                </dd>
+			</dl>
+            <dl class="nowrap">
+				<dt>上级菜单：</dt>
+                <dd>
+				<select name="parent_id" class="combox" id="id_menu_adding">
+					<option value="">无</option>
+                    {% for i in all_menus %}
+					<option value="{{i.id}}">{{i.system.name}}-{{i.full_name}}</option>
+                    {% end %}
+				</select>
+                </dd>
+			</dl>
+            <dl class="nowrap">
+				<dt>菜单名称：</dt>
+                <dd><input name="name" class="required" type="text" size="36" /></dd>
+			</dl>
+            <dl class="nowrap">
+				<dt>资源：</dt>
+                <dd>
+				<select name="resource_id" class="combox" size="36" >
+					<option value="">无</option>
+                    {% for i in all_resources %}
+					<option value="{{i.id}}">{{i.full_name}}</option>
+                    {% end %}
+				</select>
+                </dd>
+			</dl>
+            <dl class="nowrap">
+				<dt>URI：</dt>
+                <dd> <input name="uri" type="text" size="36" /></dd>
+			</dl>
+            <dl class="nowrap">
+				<dt>标签页ID：</dt>
+                <dd><input name="target" type="text" size="36" /></dd>
+			</dl>
+            <dl class="nowrap">
+				<dt>序号：</dt>
+                <dd> <input name="no" class="required digits" type="text" size="36" /> </dd>
+			</dl>
+        </fieldset>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+

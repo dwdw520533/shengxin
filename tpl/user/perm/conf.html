@@ -1,0 +1,9 @@
+
+{% for i in perm_attr %}
+<dl class="nowrap">
+    <dt>{{i}}：</dt>
+    <dd>
+    <input name="__{{i}}" type="text" value="{{perm_attr[i]}}"/> <span style="margin-left:10px;">all:表示全部</span>
+    </dd>
+</dl>
+{% end %}

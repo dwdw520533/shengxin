@@ -1,0 +1,87 @@
+
+<style>
+.pageFormContent dl.nowrap dd {width:400px;}
+</style>
+<div class="pageContent">
+	<form method="post" action="notice/save" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+        <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+		<div class="pageFormContent" layoutH="56">			
+        <fieldset style='border:0px;'>
+            <dl class="nowrap">
+                <dt>标题：</dt>
+                <dd><input name="name" class="required" type="text"/></dd>
+				<dt>类别：</dt>
+                <dd>
+				<select name="category_id" class="required combox">
+                    {% for i in category_list %}
+					<option value="{{i.id}}">{{i.name}}</option>
+                    {% end %}
+				</select>
+                </dd>
+			</dl>
+            <dl class="nowrap">
+				<dt>是否置顶：</dt>
+                <dd>
+				<select name="is_top" class="required combox">
+					<option value="0">否</option>
+					<option value="1">是</option>
+				</select>
+                </dd>
+				<dt>是否广播：</dt>
+                <dd>
+				<select id="id_is_global" name="is_global" class="required combox">
+					<option value="1">是</option>
+					<option value="0">否</option>
+				</select>
+                </dd>
+			</dl>
+            <dl class="nowrap">
+                <dt>内容：</dt>
+                <dd>
+                    <textarea class="required editor" name="content" cols="110" rows="15"></textarea>
+                </dd>
+            </dl>
+            <dl class="nowrap" id="id_who_user" style="display:none;">
+                <dt>通知人员：</dt>
+                <dd style="width:800px;">
+                    <input type="hidden" name="user_notice_0.id" />
+                    <input type="text" name="user_notice_0.real_name" readonly="1" size="80" />
+                    <a class="btnLook" href="notice/who/user" lookupGroup="user_notice_0">查找人员</a>
+                    <span class="info">选择</span>
+                </dd>
+            </dl>
+            <dl class="nowrap" id="id_who_org" style="display:none;">
+                <dt>通知部门：</dt>
+                <dd style="width:800px;">
+                    <input type="hidden" name="org_notice_0.id" />
+                    <input type="text" name="org_notice_0.name" readonly="1" size="80" />
+                    <a class="btnLook" href="notice/who/organization" readonly="1" lookupGroup="org_notice_0">查找部门</a>
+                    <span class="info">选择</span>
+                </dd>
+            </dl>
+        </fieldset>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+<script>
+	$("#id_is_global").change(function(event){
+        if ($(this).val() == "1"){
+            $("#id_who_user").hide();
+            $("#id_who_org").hide();
+        }
+        else {
+            $("#id_who_user").show();
+            $("#id_who_org").show();
+        }
+		event.preventDefault();
+	})
+</script>
+

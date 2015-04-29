@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<title>中科富创登录系统</title>
+
+<link href="{{static_url('dwz/themes/default/style.css')}}" id="themeid" rel="stylesheet" type="text/css" media="screen"/>
+<link href="{{static_url('dwz/themes/css/core.css')}}" rel="stylesheet" type="text/css" media="screen"/>
+<link href="{{static_url('dwz/themes/css/print.css')}}" rel="stylesheet" type="text/css" media="print"/>
+<link href="{{static_url('dwz/uploadify/css/uploadify.css')}}" rel="stylesheet" type="text/css" media="screen"/>
+<!--[if IE]>
+<link href="{{static_url('dwz/themes/css/ieHack.css')}}" rel="stylesheet" type="text/css" media="screen"/>
+<![endif]-->
+<style type="text/css">
+	#header{height:85px}
+	#leftside, #container, #splitBar, #splitBarProxy{top:90px}
+</style>
+
+<link href="{{static_url('css/table.css')}}" rel="stylesheet" type="text/css" media="screen" />
+
+<script src="{{static_url('dwz/js/speedup.js')}}" type="text/javascript"></script>
+<script src="{{static_url('dwz/js/jquery-1.7.2.min.js')}}" type="text/javascript"></script>
+<script src="{{static_url('dwz/js/jquery.cookie.js')}}" type="text/javascript"></script>
+<script src="{{static_url('dwz/js/jquery.validate.js')}}" type="text/javascript"></script>
+<script src="{{static_url('dwz/js/jquery.bgiframe.js')}}" type="text/javascript"></script>
+<script src="{{static_url('dwz/xheditor/xheditor-1.1.14-zh-cn.min.js')}}" type="text/javascript"></script>
+<script src="{{static_url('dwz/uploadify/scripts/swfobject.js')}}" type="text/javascript"></script>
+<script src="{{static_url('dwz/uploadify/scripts/jquery.uploadify.v2.1.0.js')}}" type="text/javascript"></script>
+
+<script src="{{static_url('dwz/bin/dwz.min.js')}}" type="text/javascript"></script>
+<script src="{{static_url('dwz/js/dwz.regional.zh.js')}}" type="text/javascript"></script>
+
+<!-- svg图表  supports Firefox 3.0+, Safari 3.0+, Chrome 5.0+, Opera 9.5+ and Internet Explorer 6.0+ -->
+<script type="text/javascript" src="{{static_url('dwz/chart/raphael-min.js')}}"></script>
+<script type="text/javascript" src="{{static_url('dwz/chart/raphael.js')}}"></script>
+<script type="text/javascript" src="{{static_url('dwz/chart/g.raphael.js')}}"></script>
+<script type="text/javascript" src="{{static_url('dwz/chart/g.bar.js')}}"></script>
+<script type="text/javascript" src="{{static_url('dwz/chart/g.line.js')}}"></script>
+<script type="text/javascript" src="{{static_url('dwz/chart/g.pie.js')}}"></script>
+<script type="text/javascript" src="{{static_url('dwz/chart/g.dot.js')}}"></script>
+<script type="text/javascript" src="{{static_url('js/highcharts.js')}}"></script>
+<script type="text/javascript" src="{{static_url('js/exporting.js')}}"></script>
+
+<!-- 显示图形报表的js -->
+<script type="text/javascript" src="{{static_url('copyright/statistics/showGraphicsStatements.js')}}"></script>
+<!-- 添加合同附件的js -->
+<script type="text/javascript" src="{{static_url('copyright/contract/attachmentEdit.js')}}"></script>
+
+<!-- 客服系统 begin -->
+<!-- 通讯控件事件事件导入 -->
+<script type="text/javascript">
+function open_user_navtab(phone, suffix_method){
+   $wrn_el = $("#cs_warn_phone")
+   _url = "/proxy?x-url=http://{{current_system.domain}}/order/report/"+suffix_method
+   _url += "?phone="+phone
+   $wrn_el.attr("href", _url)
+   $wrn_el.attr("title", phone)
+   $wrn_el.attr("rel", phone)
+   $wrn_el.click()
+}
+
+function save_phone_state(lCallID, lCallState, lPreState, strCallNumber, strWgpNumber, bIsCallIn){
+    var log_state = ("lCallID: " + lCallID);
+        log_state += (" lCallState: " + lCallState);
+        log_state += (" lPreState: " + lPreState);
+        log_state += (" strCallNumber: " + strCallNumber);
+        log_state += (" strWgpNumber: " + strWgpNumber);
+        log_state += (" bIsCallIn: " + bIsCallIn);
+        $.ajax({
+			type:'GET',
+			url: "/call/log/state?state_str=" + log_state,
+			dataType:"json",
+			cache: false,
+			success:function(){
+            }
+		});
+}
+
+{% if user_group %}
+// 初始化登陆信息客服,后续改成用户动态获取信息
+var CtiSvr="{{user_group['ip']}}";
+var ExtNum="{{user_group['phone_num']}}";
+var AgtPwd="{{user_group['phone_num_pwd']}}";
+var WGs="{{user_group['cus_group']}}";
+var MonPwds="{{user_group['cus_group_pwd']}}";
+var action;
+var RetryTimes=0;//登陆次数
+var isLogoned=false;//是否已经登陆
+{%end%}
+</script>
+<script type="text/javascript">
+<!-- 客服系统 end-->
+$(function(){
+	DWZ.init("{{static_url('dwz/dwz.frag.xml')}}", {
+		loginUrl:"/user/login", loginTitle:"登录",	// 弹出登录对话框
+		statusCode:{ok:200, error:300, timeout:301}, //【可选】
+		pageInfo:{pageNum:"pageNum", numPerPage:"numPerPage", orderField:"orderField", orderDirection:"orderDirection"}, //【可选】
+		debug:false,	// 调试模式 【true|false】
+		callback:function(){
+			initEnv();
+			$("#themeList").theme({themeBase:"{{static_url('dwz/themes')}}"});
+			//setTimeout(function() {$("#sidebar .toggleCollapse div").trigger("click");}, 10);
+			setTimeout(function() {
+                logon_button = $("#logon_cli_id");
+                if(logon_button != undefined){
+                    logon_button.trigger("click");
+                }
+            }, 500);
+		}
+	});
+});
+</script>
+</head>
+<body scroll="no" >
+    <a id="cs_warn_phone" target="navTab"></a>
+	<div id="layout">
+		<div id="header">
+
+			<div class="headerNav">
+				<ul class="nav">
+                    {% if current_user %}
+                        {% for i in subsystems %}
+                            {% if current_system.id != i.id %}
+                            <li><a href="{{i.domain}}" target="blank">{{i.name}}</a></li>
+                            {% end %}
+                        {% end %}
+                        <li><a href="#">欢迎 {{current_user.name}}</a></li>
+                        <li><a href="/user/passwd/change" target="dialog" width="600">修改密码</a></li>
+                        <li><a href="/user/logout">退出</a></li>
+                    {% else %}
+					    <li><a href="/user/login">登陆</a></li>
+                    {% end %}
+				</ul>
+				<ul class="themeList" id="themeList">
+					<li theme="default"><div class="selected">蓝色</div></li>
+					<li theme="green"><div>绿色</div></li>
+					<li theme="purple"><div>紫色</div></li>
+					<li theme="silver"><div>银色</div></li>
+					<li theme="azure"><div>天蓝</div></li>
+				</ul>
+			</div>
+			<div id="navMenu">
+				<ul>
+					<li class="selected"><a href="/me"><span>首页</span></a></li>
+                    {% for i in menu_0_list %}
+                    {% if touch_menu(i) %}
+                    <li><a href="/tree?parent_id={{i.id}}"><span>{{i.name}}</span></a></li>
+                    {% end %}
+                    {% end %}
+				</ul>
+			</div>
+		</div>
+
+		<div id="leftside">
+			<div id="sidebar_s">
+				<div class="collapse">
+					<div class="toggleCollapse"><div></div></div>
+				</div>
+			</div>
+			<div id="sidebar">
+                <div class="toggleCollapse"><h2>主菜单</h2><div>收缩</div></div>
+                <div class="accordion" fillSpace="sidebar">
+                    <!--
+                    <div class="accordionHeader">
+                        <h2><span>Folder</span>首页</h2>
+                    </div>
+                    -->
+                    <div class="accordionContent">
+                        <ul class="tree treeFolder">
+                            <li><a href="/me/home" target="navTab" rel="main">我的主页</a></li>
+                        </ul>
+                    </div>
+                </div>
+			</div>
+		</div>
+		<div id="container">
+        {% if user_group %}
+        <div id="picc" style="display:bloack;height:21px;">
+        <SCRIPT language="JavaScript" event="CallEvent(lCallID, lCallState, lPreState, strCallNumber, strWgpNumber, bIsCallIn)"
+            for="AgentCtrl" id="AgentCtrl" width="1000" height="21">
+            save_phone_state(lCallID, lCallState, lPreState, strCallNumber, strWgpNumber, bIsCallIn);
+            switch (lCallState){
+                case 6:{                 //  A_CALL_STATE_RINGBACK
+                    break;
+                }
+                case 15:{                //  A_CALL_STATE_RING
+                    break;
+                }case 2:{                 //  A_CALL_STATE_CONNECTED
+                    occupation = GetIVRData("ivrdata")
+                    if(parseInt(occupation) == 1){
+                       open_user_navtab(strCallNumber, 'drorder')
+                    }
+                    if(parseInt(occupation) == 2){
+                       open_user_navtab(strCallNumber, 'rvorder')
+                    }
+                    if(parseInt(occupation) == 3){
+                        open_user_navtab(strCallNumber, 'other')
+                    }
+                    break;
+                }case 13:{                //  A_CALL_STATE_DISCONNECT
+                    break;
+                }
+            }
+       	</SCRIPT>
+        <img border="0" id="logon_cli_id" style="display:none;"
+            onclick="AgentCtrl.LogonExt(CtiSvr, ExtNum, AgtPwd);AgentCtrl.LogonWgps(WGs, MonPwds);"/>
+        <OBJECT codeBase="{{static_url('call/AltiAgentCtrl.cab')}}" align="middle" classid="clsid:E60A02EA-8BB4-4239-834B-785575B6EBCB"
+            name="AgentCtrl" id="AgentCtrl" width="1000" height="21">
+            <PARAM NAME="_Version" VALUE="65536">
+            <PARAM NAME="_ExtentX" VALUE="30427">
+            <PARAM NAME="_ExtentY" VALUE="503">
+            <PARAM NAME="_StockProps" VALUE="0">
+        </OBJECT>
+        <img border="0" id="img1"
+            onclick="AgentCtrl.SetUserData('SC,1');AgentCtrl.TransferCall('5555');AgentCtrl.drop()"
+            src="{{static_url('call/images/button3.jpg')}}" height="20" width="100" alt="满意度调查"
+            onmouseover="FP_swapImg(1,0,/*id*/'img1',/*url*/'images/button4.jpg')"
+            onmouseout="FP_swapImg(0,0,/*id*/'img1',/*url*/'images/button3.jpg')"
+            onmousedown="FP_swapImg(1,0,/*id*/'img1',/*url*/'images/button5.jpg')"
+            onmouseup="FP_swapImg(0,0,/*id*/'img1',/*url*/'images/button4.jpg')"
+            fp-style="fp-btn: Braided Row 1; fp-font: SimSun-ExtB" fp-title="满意度调查" />
+        </div>
+        {% end %}
+        <div id="navTab" class="tabsPage">
+            <div class="tabsPageHeader">
+                <div class="tabsPageHeaderContent"><!-- 显示左右控制时添加 class="tabsPageHeaderMargin" -->
+                    <ul class="navTab-tab">
+                        <li tabid="main" class="main">
+                        <a href="#"><span><span class="home_icon">我的主页</span></span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tabsLeft">left</div><!-- 禁用只需要添加一个样式 class="tabsLeft tabsLeftDisabled" -->
+                <div class="tabsRight">right</div><!-- 禁用只需要添加一个样式 class="tabsRight tabsRightDisabled" -->
+                <div class="tabsMore">more</div>
+            </div>
+            <ul class="tabsMoreList">
+                <li><a href="javascript:;">我的主页</a></li>
+            </ul>
+            {% module MyHomeModule(notice_list) %}
+        </div>
+        </div>
+    </div>
+    <div id="footer">2014 All Rights Reserved 中科富创(北京)技有限公司 版权所有</div>
+    <script>
+        function switch_box(box){
+            if (box.className == 'selected'){
+                global_hide(box);
+            } else {
+                global_show(box);
+            }
+            return false;
+        }
+        function global_show(box){
+            box.className = "selected";
+        }
+        function global_hide(box){
+            box.className = "";
+        }
+        function global_handler(event){
+        }
+    </script>
+</body>
+</html>
+

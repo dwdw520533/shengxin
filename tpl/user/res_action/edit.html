@@ -1,0 +1,35 @@
+<style>
+.pageFormContent dl.nowrap dd {width:400px;}
+</style>
+
+<div class="pageContent">
+	<form method="post" action="raction/save" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+        <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+		<div class="pageFormContent" layoutH="56">			
+        <fieldset style="border:0px;">
+            <dl class="nowrap">
+				<dt>ID：</dt>
+				<dd>{{res_act_info.id}}</dd>
+				<input type="hidden" name="id" value="{{res_act_info.id}}"/>
+			</dl>
+            <dl class="nowrap">
+				<dt>操作名称：</dt>
+                <dd><input name="name" class="required" type="text" value="{{res_act_info.name}}" /></dd>
+            </dl>
+
+            <dl class="nowrap">
+				<dt>操作编码：</dt>
+                <dd><input type="text" name="code" value="{{res_act_info.code}}" /></dd>
+			</dl>
+        </fieldset>
+        </div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

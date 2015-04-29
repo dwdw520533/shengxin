@@ -1,0 +1,35 @@
+
+<style>
+.pageFormContent dl.nowrap dd {width:400px;}
+</style>
+<div class="pageContent">
+	<form method="post" action="role/save" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+        <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+		<div class="pageFormContent" layoutH="56">
+        <fieldset style="border:0px;">
+            <dl class="nowrap">
+				<dt>角色名称：</dt>
+                <dd><input name="name" class="required" type="text" value="{{role.name}}"/></dd>
+				<input type="hidden" name="id" value="{{role.id}}"/>
+			</dl>
+            <dl class="nowrap">
+				<label>权限列表：</label>
+			</dl>
+            <dl class="nowrap">
+                {% for i in all_perms %}
+                <dd style="width:160px"><input name="perm__{{i.id}}" value="{{i.id}}" type="checkbox" {% if i.id in cur_perm_ids %}checked{%end%}>{{i.name}}</dd>
+                {% end %}
+			</dl>
+        </fieldset>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+

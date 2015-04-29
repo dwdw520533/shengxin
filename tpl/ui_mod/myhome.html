@@ -1,0 +1,31 @@
+
+<style>
+li.notice {list-style-type:square;line-height:28px;}
+.notice a:link, .notice a:visited {color:#1f3b7b;}
+</style>
+    <div class="navTab-panel tabsPageContent layoutBox">
+        <div class="page unitBox">
+            <div style="margin:10px";>
+                <div style="padding:10px;">
+                    <h2 style="line-height:18px;font-weight:bold;font-size:16px;">公告</h2>
+                </div>
+                <div style="padding:10px;">
+                <ul>
+                {% for i in notice_list %}
+                <li class="notice">
+                    <a rel="notice_tab_{{i.id}}" target="navTab" href="/me/notice?notice_id={{i.id}}">
+                    {%if i.is_top%}[置顶]{%end%}
+                    {{i.name}}
+                    </a>
+                    <span style="padding:5px 10px;">{{i.create_user}}</span>
+                    <span style="padding:5px 10px;">{{i.create_time}}</span>
+                </li>
+                {% end %}
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    

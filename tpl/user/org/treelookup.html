@@ -1,0 +1,62 @@
+<div class="pageContent">
+	<div class="pageFormContent" layoutH="68">
+    	<ul class="tree">
+            {% for col in colDict[0] %}
+            <li>
+                <a onclick="$.bringBack({id:{{col['id']}}, name:'{{col['name']}}'})" href="javascript:">{{col['name']}}</a>
+                {% if colDict.get(col['id']) %}
+                <ul>
+                {% for col1 in colDict[col['id']] %}
+                <li> <a onclick="$.bringBack({id:{{col1['id']}}, name:'{{col1['name']}}'})" href="javascript:">{{col1['name']}}</a>
+                    {% if colDict.get(col1['id']) %}
+                    <ul>
+                    {% for col2 in colDict[col1['id']] %}
+                    <li><a onclick="$.bringBack({id:{{col2['id']}}, name:'{{col2['name']}}'})" href="javascript:">{{col2['name']}}</a>
+                        {% if colDict.get(col2['id']) %}
+                        <ul>
+                            {% for col3 in colDict[col2['id']] %}
+                            <li> <a onclick="$.bringBack({id:{{col3['id']}}, name:'{{col3['name']}}'})" href="javascript:">{{col3['name']}}</a>
+                                {% if colDict.get(col3['id']) %}
+                                <ul>
+                                    {% for col4 in colDict[col3['id']] %}
+                                    <li> <a onclick="$.bringBack({id:{{col4['id']}}, name:'{{col4['name']}}'})" href="javascript:">{{col4['name']}}</a>
+                                        {% if colDict.get(col4['id']) %}
+                                        <ul>
+                                            {% for col5 in colDict[col4['id']] %}
+                                            <li> <a onclick="$.bringBack({id:{{col5['id']}}, name:'{{col5['name']}}'})" href="javascript:">{{col5['name']}}</a>
+                                                {% if colDict.get(col5['id']) %}
+                                                <ul>
+                                                    {% for col6 in colDict[col5['id']] %}
+                                                    <li> <a onclick="$.bringBack({id:{{col6['id']}}, name:'{{col6['name']}}'})" href="javascript:">{{col6['name']}}</a>
+                                                        {% if colDict.get(col6['id']) %}
+                                                            <ul>
+                                                                {% for col7 in colDict[col6['id']] %}
+                                                                <li> <a onclick="$.bringBack({id:{{col7['id']}}, name:'{{col7['name']}}'})" href="javascript:">{{col7['name']}}</a>
+                                                                    {% if colDict.get(col7['id']) %}
+                                                                        <ul>
+                                                                            {% for col8 in colDict[col7['id']] %}
+                                                                            <li> <a onclick="$.bringBack({id:{{col8['id']}}, name:'{{col8['name']}}'})" href="javascript:">{{col8['name']}}</a>
+                                                                                {% if colDict.get(col8['id']) %}
+                                                                                    <ul>
+                                                                                        {% for col9 in colDict[col8['id']] %}
+                                                                                        <li> <a onclick="$.bringBack({id:{{col9['id']}}, name:'{{col9['name']}}'})" href="javascript:">{{col9['name']}}</a>
+                                                                                        </li> {% end %}
+                                                                                    </ul> {% end %}</li> {% end %}
+                                                                        </ul> {% end %}</li> {% end %}
+                                                            </ul> {% end %}</li> {% end %}
+                                                    </ul> {% end %}</li> {% end %}
+                                            </ul> {% end %}</li> {% end %}
+                                    </ul> {% end %}</li> {% end %}
+                            </ul> {% end %}</li> {% end %}
+                        </ul> {% end %}</li> {% end %}
+            </ul> {% end %}</li> {% end %}
+        </ul>
+	</div>
+
+	<div class="formBar">
+		<ul>
+			<li><div class="button"><div class="buttonContent"><button class="close" type="button">关闭</button></div></div></li>
+		</ul>
+	</div>
+</div>
+

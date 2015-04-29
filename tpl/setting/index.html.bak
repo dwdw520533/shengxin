@@ -1,0 +1,22 @@
+
+<div class="accordion" fillSpace="sideBar">
+	<div class="accordionContent">
+		<ul class="tree treeFolder">
+            {% for i in menu_list %}
+                {% if i.url %}
+                <li class="cur"><a href="{{ menu_url(i.url) }}" target="navTab" rel="dlist">{{i.name}}</a></li>
+                {% else %}
+                <li>
+                    <span>{{i.name}}</span>
+                    <ul>
+                    {% for j in i.children() %}
+                    <li class="cur"><a href="{{ menu_url(i.url) }}" target="navTab" rel="dlist">{{j.name}}</a></li>
+                    {% end %}
+                    </ul>
+                </li>
+                {% end %}
+            {% end %}
+		</ul>
+	</div>
+</div>
+

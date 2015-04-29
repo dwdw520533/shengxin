@@ -1,0 +1,64 @@
+
+<form id="pagerForm" method="post" action="subsystem/list">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+	<input type="hidden" name="name" value="{{name}}" />
+	<input type="hidden" name="syskey" value="{{syskey}}" />
+    <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+</form>
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="subsystem/list" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					子系统名：<input type="text" name="name" value="{{name}}"/>
+				</td>
+				<td>
+					Key：<input type="text" name="syskey" size="40" value="{{syskey}}"/>
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="subsystem/add?target_tab={{target_tab}}" target="dialog"><span>添加</span></a></li>
+			<li><a class="edit" href="subsystem/edit?id={sid_subsys}&target_tab={{target_tab}}" target="dialog"><span>修改</span></a></li>
+			<li class="line">line</li>
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th align="center">序号</th>
+				<th align="center">名称</th>				
+				<th align="center">域名</th>				
+				<th align="center">Key</th>
+				<th align="center">Secret</th>
+				<th align="center">更新日期</th>
+			</tr>
+		</thead>
+		<tbody>		
+			   {% for o in subsystems %}
+				<tr target="sid_subsys" rel="{{o.id}}">
+					<td>{{o.id}}</td>
+					<td>{{o.name}}</td>
+					<td>{{o.domain}}</td>
+					<td>{{o.syskey}}</td>
+					<td>{{o.secret}}</td>
+					<td>{{o.update_time}}</td>
+				</tr>
+				{% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize) %}
+</div>
+

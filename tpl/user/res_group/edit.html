@@ -1,0 +1,44 @@
+<style>
+.pageFormContent dl.nowrap dd {width:400px;}
+</style>
+
+<div class="pageContent">
+	<form method="post" action="resgroup/save" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+        <input type="hidden" name="target_tab" value="{{target_tab}}"/>
+		<div class="pageFormContent" layoutH="56">			
+        <fieldset style="border:0px;">
+            <dl class="nowrap">
+				<dt>资源：</dt>
+                <dd>
+				<select name="sub_sys_id" class="required">
+                    {% for i in all_systems %}
+					<option value="{{i.id}}" {% if i.id == sys_group_info.sub_sys_id %}selected="selected"{% end %}>{{i.name}}</option>
+                    {% end %}
+				</select>
+            </dl>
+            <dl class="nowrap">
+				<dt>ID：</dt>
+				<dd>{{sys_group_info.id}}</dd>
+				<input type="hidden" name="id" value="{{sys_group_info.id}}"/>
+			</dl>
+            <dl class="nowrap">
+				<dt>名称：</dt>
+                <dd><input name="name" class="required" type="text" value="{{sys_group_info.name}}" /></dd>
+            </dl>
+
+            <dl class="nowrap">
+				<dt>显示名称：</dt>
+                <dd><input type="text" name="nick" value="{{sys_group_info.nick}}" /></dd>
+			</dl>
+        </fieldset>
+        </div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

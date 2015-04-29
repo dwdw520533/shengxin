@@ -1,0 +1,62 @@
+
+<div class="pageHeader">
+	<form id="pagerForm" onsubmit="return dwzSearch(this,'dialog');" action="notice/who/organization" method="post">
+	<input type="hidden" name="pageNum" value="1" />
+	<input type="hidden" name="numPerPage" value="{{psize}}" />
+	<input type="hidden" name="orderField" value="id" />
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					组织名称：<input type="text" name="name" value="{{name}}"/>
+				</td>
+				<td>
+					上级组织：
+                    <select name="parent_id" style="width:120px;">
+                        <option value="0">不限</option>
+                        {% for i in all_org_list %}
+                        <option value="{{i.id}}" {% if parent_id == i.id %}selected{%end%}>{{i.full_name}}</option>
+                        {% end %}
+                    </select>
+				</td>
+				<td>
+				    <div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div>
+				    <div class="button" style="margin-left:10px;"><div class="buttonContent">
+                    <button type="button" multLookup="org">选择带回</button>
+                    </div></div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<table class="table" width="100%" layoutH="110">
+		<thead>
+			<tr>
+				<th width="30"><input type="checkbox" class="checkboxCtrl" group="org" /></th>
+				<th align="center">ID</th>
+				<th align="center">名称</th>
+				<th align="center">上级</th>				
+			</tr>
+		</thead>
+		<tbody>		
+            <tr>
+                <td><input type="checkbox" name="org" value="{id:'',name:''}"/></td>
+                <td>空</td>
+                <td>空</td>
+                <td>空</td>
+            </tr>
+            {% for i in org_list %}
+            <tr target="sid_org" rel="{{i.id}}">
+                <td><input type="checkbox" name="org" value="{id:'{{i.id}}',name:'{{i.name}}'}"/></td>
+                <td>{{i.id}}</td>
+                <td>{{i.name}}</td>
+                <td>{% if i.parent %}{{i.parent.full_name}}{%else%}无{%end%}</td>
+            </tr>
+            {% end %}
+		</tbody>
+	</table>
+    {% module Pagination(count,page,psize,'dialog') %}
+</div>
+
