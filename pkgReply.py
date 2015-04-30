@@ -12,14 +12,11 @@ import web
 
 class pkgResponse:
     TEMPLATE = to_unicode("""<xml>
-<AppId><![CDATA[{appid}]]></AppId>
-<Package><![CDATA[{package}]]></Package>
-<TimeStamp>{timestamp}</TimeStamp>
-<NonceStr><![CDATA[{noncestr}]]></NonceStr>
-<RetCode>{retcode}</RetCode>
-<RetErrMsg><![CDATA[{reterrmsg}]]></RetErrMsg>
-<AppSignature><![CDATA[{appsignature}]]></AppSignature>
-<SignMethod><![CDATA[{signmethod}]></SignMethod>
+<ToUserName><![CDATA[{toUser}]]></ToUserName>
+<FromUserName><![CDATA[{fromUser}]]></FromUserName>
+<CreateTime>{CreateTime}</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[{content}]]></Content>
 </xml>""")
 
     _args = dict()

@@ -19,6 +19,9 @@ class Method:
     def GET(self):
         # 获取输入参数
         data = web.input()
+        if not data:
+            return web.HTTPError('403', 'param check failed!')
+
         signature = data.signature
         timestamp = data.timestamp
         nonce = data.nonce
