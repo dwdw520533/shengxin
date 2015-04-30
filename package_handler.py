@@ -40,9 +40,10 @@ class Method:
 
     def POST(self):
         try:
+            reqhead = web.input()
             reqbody = web.data()
             logging.info(reqbody)
-            message = pkgRequest.parse_user_msg(self.signature, reqbody)
+            message = pkgRequest.parse_user_msg(reqhead["signature"], reqbody)
             if not message.check_appsignature():
                 return web.HTTPError('403', 'check_signature failed!')
 
