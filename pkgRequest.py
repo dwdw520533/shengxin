@@ -9,7 +9,8 @@ import utils
 class pkgRequest(object):
     kwargs = {}
 
-    def __init__(self, **kwargs):
+    def __init__(self, signature, **kwargs):
+        self.appsignature = signature
         self.kwargs = kwargs
 
     def check_appsignature(self):
@@ -19,7 +20,7 @@ class pkgRequest(object):
         return sign == self.appsignature
 
 
-def parse_user_msg(xml):
+def parse_user_msg(signature, xml):
     """
     Parse xml from wechat server and return an Message
     :param xml: raw xml from wechat server.
@@ -31,7 +32,7 @@ def parse_user_msg(xml):
     _msg = dict((child.tag, to_unicode(child.text))
                 for child in ElementTree.fromstring(xml))
 
-    return pkgRequest(**_msg)
+    return pkgRequest(signature, **_msg)
 
 
 reqxml = """<xml>
