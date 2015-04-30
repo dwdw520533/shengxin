@@ -10,7 +10,7 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 
 urls = (
-    "/weagent/wepay/service", "package_handler.Method",
+    "/weagent/service", "package_handler.Method",
 )
 
 
