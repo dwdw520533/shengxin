@@ -34,7 +34,7 @@ def generate_sign(**kwargs):
         string1 += "%s=%s" % (k.lower(), v)
 
     #print string1
-    return hashlib.sha1(string1).hexdigest()
+    return hashlib.sha1(force_utf8(string1)).hexdigest()
 
 
 def create_url(**kwargs):
@@ -184,3 +184,17 @@ if __name__ == "__main__":
 
     print hashlib.sha1(str1).hexdigest() == _sign
     test()
+
+def force_utf8(data):
+    '''
+    数据转换为utf8
+    @data: 待转换的数据
+    @return: utf8编码
+    '''
+    if isinstance(data, unicode):
+        return data.encode('utf-8')
+    elif isinstance(data, list):
+        return [force_utf8(i) for i in data]
+    elif isinstance(data, dict):
+        return {force_utf8(i):force_utf8(data[i]) for i in data}
+    return data

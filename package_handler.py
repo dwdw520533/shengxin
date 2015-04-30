@@ -20,7 +20,7 @@ class Method:
         # 获取输入参数
         data = web.input()
         if not data:
-            return web.HTTPError('403', 'param check failed!')
+            return 'param check failed!'
 
         signature = data.signature
         timestamp = data.timestamp
@@ -46,11 +46,11 @@ class Method:
             if not message.check_appsignature():
                 return web.HTTPError('403', 'check_signature failed!')
 
-            logging.info(u"request = %s" % reqbody)
             reply = pkgReply.get_reply(message)
-            logging.info(u"reply = %s" % reply)
+            logging.info(message)
         except Exception, e:
             errmsg = traceback.format_exc()
+            print errmsg
             logging.error(errmsg)
             reply = None
 
