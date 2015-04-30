@@ -3,7 +3,7 @@
 	<listen>10</listen>
 	<plugins>python</plugins>
 	<master>true</master>
-	<pidfile>/data/pid</pidfile>
+	<pidfile>/data/host.pid</pidfile>
 	<processes>1</processes>
 	<module>entrance</module>
 	<pythonpath>/data/work/shengxin</pythonpath>
