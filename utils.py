@@ -9,7 +9,6 @@ import time
 import inspect
 import hashlib
 from datetime import datetime
-import json
 
 
 def test():
@@ -34,7 +33,7 @@ def generate_sign(**kwargs):
         string1 += "%s=%s" % (k.lower(), v)
 
     #print string1
-    return hashlib.sha1(to_unicode(string1)).hexdigest()
+    return hashlib.sha1(string1).hexdigest()
 
 
 def create_url(**kwargs):
