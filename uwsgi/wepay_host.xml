@@ -1,12 +1,12 @@
 <uwsgi>
-	<socket>localhost:8601</socket>
-	<listen>5</listen>
+	<socket>127.0.0.1:8601</socket>
+	<listen>10</listen>
 	<plugins>python</plugins>
 	<master>true</master>
-	<pidfile>/run/uwsgi/app/wepay_host/pid</pidfile>
+	<pidfile>/data/pid</pidfile>
 	<processes>1</processes>
 	<module>entrance</module>
-	<pythonpath>/home/wepay_host/wepay_host</pythonpath>
+	<pythonpath>/data/work/shengxin</pythonpath>
 	<profiler>true</profiler>
 	<memory-report>true</memory-report>
 	<enable-threads>true</enable-threads>
