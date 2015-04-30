@@ -11,13 +11,7 @@ import web
 
 
 class pkgResponse:
-    TEMPLATE = to_unicode("""<xml>
-<ToUserName><![CDATA[{ToUserName}]]></ToUserName>
-<FromUserName><![CDATA[{ToUserName}]]></FromUserName>
-<CreateTime>{CreateTime}</CreateTime>
-<MsgType><![CDATA[text]]></MsgType>
-<Content><![CDATA[{Content}]]></Content>
-</xml>""")
+    TEMPLATE = to_unicode("<xml><ToUserName><![CDATA[{ToUserName}]]></ToUserName><FromUserName><![CDATA[{ToUserName}]]></FromUserName><CreateTime>{CreateTime}</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[{Content}]]></Content></xml>")
 
     kwargs = dict()
 
