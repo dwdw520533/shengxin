@@ -1,0 +1,15 @@
+<uwsgi>
+	<socket>localhost:8601</socket>
+	<listen>5</listen>
+	<plugins>python</plugins>
+	<master>true</master>
+	<pidfile>/run/uwsgi/app/wepay_host/pid</pidfile>
+	<processes>1</processes>
+	<module>entrance</module>
+	<pythonpath>/home/wepay_host/wepay_host</pythonpath>
+	<profiler>true</profiler>
+	<memory-report>true</memory-report>
+	<enable-threads>true</enable-threads>
+	<logdate>true</logdate>
+	<limit-as>6048</limit-as>
+</uwsgi>
